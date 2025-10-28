@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TIXIFY Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="w-full flex items-center justify-center p-6 sm:p-12 relative bg-gradient-to-br from-indigo-600 to-blue-500 font-sans min-h-screen">
+
+  {# Toast Message #}
+  {% if toast %}
+    <div class="absolute top-4 right-4 px-4 py-3 rounded z-50 shadow-lg 
+      {{ toast.isError ? 'bg-red-100 border border-red-400 text-red-700' : 'bg-green-100 border border-green-400 text-green-700' }}">
+      <strong class="font-bold">{{ toast.isError ? 'Error!' : 'Success!' }}</strong>
+      <span class="block sm:inline ml-2">{{ toast.message }}</span>
+    </div>
+  {% endif %}
+
+  <div class="w-full max-w-md bg-gray-300 p-6 rounded-lg shadow-lg">
+    <div class="lg:hidden text-center mb-8">
+      <div class="inline-block p-3 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ticket-icon lucide-ticket"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+      </div>
+      <h1 class="text-3xl font-bold mt-4 text-gray-800">TIXIFY</h1>
+    </div>
+
+    <h2 class="text-3xl font-bold text-white mb-2">Welcome Back!</h2>
+    <p class="text-white mb-8">Please enter your details to sign in.</p>
+
+    <form method="POST" action="/src/login.php" class="space-y-6">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input id="email" name="email" type="email" placeholder="user@example.com"
+          class="w-full pl-3 pr-4 py-3 border rounded-lg focus:ring-2 transition 
+          {{ errors.email ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500' }}"
+          value="{{ old.email ?? '' }}" required>
+        {% if errors.email %}
+          <p class="text-red-600 text-sm mt-1">{{ errors.email }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <div class="flex justify-between items-baseline">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot password?</a>
+        </div>
+        <input id="password" name="password" type="password" placeholder="password123"
+          class="w-full pl-3 pr-4 py-3 border rounded-lg focus:ring-2 transition 
+          {{ errors.password ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500' }}"
+          required>
+        {% if errors.password %}
+          <p class="text-red-600 text-sm mt-1">{{ errors.password }}</p>
+        {% endif %}
+      </div>
+
+      <button type="submit"
+        class="w-full mt-8 bg-yellow-400 text-gray-800 font-bold py-3 px-4 rounded-lg hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition duration-300">
+        Login
+      </button>
+    </form>
+
+    <div class="flex items-center my-6">
+      <div class="flex-grow border-t border-gray-300"></div>
+      <span class="flex-shrink mx-4 text-gray-500 text-sm">Or continue with</span>
+      <div class="flex-grow border-t border-gray-300"></div>
+    </div>
+
+    <button class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" fill="currentColor">
+        <path d="M488 261.8c0-17.8-1.5-35.7-4.6-53H249v100h135.7c-5.9 31.8-23.8 58.8-50.7 76.7v63h81.9c48-44.2 75.8-109.3 75.8-186.7z"/>
+      </svg>
+      <span class="font-medium text-gray-700">Sign in with Google</span>
+    </button>
+
+    <p class="text-center text-gray-600 mt-8">
+      Don't have an account? <a href="/getStarted" class="font-medium text-indigo-600 hover:underline">Get Started</a>
+    </p>
+  </div>
+</body>
+</html>

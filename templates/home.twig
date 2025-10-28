@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tixify</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <main class="justify-center relative bg-gradient-to-r from-indigo-600 to-blue-600 w-full mx-auto px-6 py-10 text-white overflow-hidden mb-[-25px]">
+    <div class="mx-auto text-center gap-5">
+      <h1 class="text-4xl text-center font-extrabold mb-4">TIXIFY</h1> 
+      <p class="mb-8 text-lg">Your destination for creating and managing event tickets</p>
+    </div>
+
+    <div class="flex justify-center gap-5 p-10 mt-10 mb-8 text-lg">
+      <a href="/src/login.php" class="bg-yellow-500 hover:bg-yellow-700 text-black font-bold py-3 px-6 rounded transition">Login</a>
+      <a href="/getStarted.php" class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded transition">Get Started</a>
+    </div>
+
+    <!-- Wave Section -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
+      <svg
+        class="relative block w-[calc(100%+1.3px)] h-32"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,0V46.29c47.79,22,103.59,29,158,17,
+          70.36-15.39,136.13-57.58,206-66.66C438.18-14.11,
+          512,14.88,583,35.59c69.14,20.26,138.28,32.91,
+          208,24.08,66.54-8.35,130.46-38.38,196-53.69,
+          C1038.4-4,1114.24,1.66,1200,29.15V0Z"
+          fill="#ffffff"
+        ></path>
+      </svg>
+    </div>
+  </main>
+
+  <div class="flex-grow max-w-[600px] sm:w-full md:w-full px-6 py-10 mt-10">
+    <h3 class="text-indigo-600 font-bold text-2xl">WHY TIXIFY?</h3>
+    <p class="text-black font-bold text-xl">Everything you need for your event</p>
+    <p class="text-gray-600">From small meetups to large-scale concerts, TIXIFY provides the tools to make your event a success.</p>
+  </div>
+
+  <footer class="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-200 text-black w-full px-8 py-6 mt-8 text-center">
+    <p class="flex items-center gap-2 text-2xl font-extrabold">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ticket-icon lucide-ticket"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg> TIXIFY
+    </p>
+    <p class="text-gray-600 text-sm">
+      © 2025 <span class="font-semibold">TIXIFY</span>. All rights reserved.
+    </p>
+    <div class="flex gap-4 text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter-icon lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+    </div>
+  </footer>
+
+</body>
+</html>

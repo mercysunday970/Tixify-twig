@@ -1,0 +1,7 @@
+{
+    "name": "twig/tixify",
+    "description": "My tixify twig app",
+    "require": {
+        "twig/twig": "^3.21"
+    }
+}
