@@ -3,7 +3,7 @@
         'name' => 'twig/tixify',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c516f581fd1e8f600fe069fb32d61b6d84d288c8',
+        'reference' => 'db9133a6d625b869e883cab0a00af232177d5c9f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'twig/tixify' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c516f581fd1e8f600fe069fb32d61b6d84d288c8',
+            'reference' => 'db9133a6d625b869e883cab0a00af232177d5c9f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
