@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TIXIFY Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+
+    {# --- Header --- #}
+    <header class="px-8 py-6 flex justify-between items-center max-w-7xl w-full mx-auto">
+        <h1 class="text-4xl font-extrabold">TIXIFY Dashboard</h1>
+        <form method="POST" action="/logout">
+            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center gap-2 px-4 py-2 rounded transition duration-300">
+                🏷️ Logout
+            </button>
+        </form>
+    </header>
+
+    {# --- Main Content --- #}
+    <div class="flex-grow p-6 max-w-7xl w-full mx-auto">
+
+        <p class="mb-12 text-lg text-center">
+            A snapshot of your current ticket status.
+        </p>
+
+        {# --- Statistics Cards --- #}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {% set total = tickets|length %}
+            {% set open = tickets|filter(t => t.status == 'Open')|length %}
+            {% set inProgress = tickets|filter(t => t.status == 'In Progress')|length %}
+            {% set resolved = tickets|filter(t => t.status == 'Sold Out')|length %}
+
+            {% set stats = [
+                {'title':'Total Tickets', 'value': total, 'color':'text-indigo-500', 'icon':'🎟️'},
+                {'title':'Open Tickets', 'value': open, 'color':'text-red-500', 'icon':'🏠'},
+                {'title':'In Progress', 'value': inProgress, 'color':'text-yellow-500', 'icon':'✅'},
+                {'title':'Sold Out/Resolved', 'value': resolved, 'color':'text-green-500', 'icon':'✔️'}
+            ] %}
+
+            {% for stat in stats %}
+            <div class="bg-white text-gray-900 shadow-xl border-t-4 border-indigo-400 rounded-lg p-4">
+                <div class="flex justify-between items-center pb-2">
+                    <div class="text-sm font-medium">{{ stat.title }}</div>
+                    <div class="{{ stat.color }} text-xl">{{ stat.icon }}</div>
+                </div>
+                <div class="text-4xl font-bold">{{ stat.value }}</div>
+                <p class="text-xs text-gray-500 mt-1">
+                    {{ stat.title == 'Total Tickets' ? 'Overall Count' : 'Current Status' }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {# --- Ticket Management Button --- #}
+        <div class="text-center mt-12">
+            <a href="/src/tickets.php" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-8 text-lg rounded-lg shadow-xl transition duration-300 inline-block">
+                Go to Ticket Management Screen
+            </a>
+        </div>
+
+    </div>
+
+    {# --- Footer --- #}
+    <footer class="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-200 text-black w-full px-8 py-6 mt-8 text-center">
+        <p class="flex items-center gap-2 text-2xl font-extrabold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ticket-icon lucide-ticket"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg> TIXIFY
+        </p>
+
+        <p class="text-gray-600 text-sm">
+            © 2024 <span class="font-semibold">TIXIFY</span>. All rights reserved.
+        </p>
+
+        <div class="flex gap-4 text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter-icon lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+        </div>
+    </footer>
+
+</body>
+</html>

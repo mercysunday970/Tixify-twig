@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TIXIFY Ticket Management</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-r from-indigo-600 to-blue-600 text-white overflow-hidden">
+
+<!-- Header -->
+<header class="px-8 py-6 flex justify-between items-center max-w-7xl w-full mx-auto">
+    <h1 class="text-4xl font-extrabold">TIXIFY Ticket Management</h1>
+    <form method="POST" action="#">
+        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+            Logout
+        </button>
+    </form>
+</header>
+
+<!-- Tickets Grid -->
+<div class="flex-grow max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+    {% if tickets is defined and tickets|length > 0 %}
+        {% for ticket in tickets %}
+        <div class="bg-white text-gray-900 rounded-lg shadow-md p-4 flex flex-col justify-between">
+            <div>
+                <h3 class="font-bold text-lg mb-1">{{ ticket.title }}</h3>
+                <p class="text-sm mb-2">{{ ticket.description }}</p>
+                <span class="px-2 py-0.5 rounded-full text-xs font-semibold
+                    {% if ticket.status == 'Open' %}bg-green-100 text-green-800
+                    {% elseif ticket.status == 'In Progress' %}bg-amber-100 text-amber-800
+                    {% elseif ticket.status == 'Sold Out' %}bg-gray-100 text-gray-800
+                    {% endif %}">
+                    {{ ticket.status }}
+                </span>
+                <p class="text-xs text-gray-500 mt-1">Created at: {{ ticket.createdAt }}</p>
+            </div>
+            <div class="mt-4 flex justify-end gap-2">
+                <button class="bg-white text-black px-3 py-1 rounded hover:bg-gray-200 editBtn"
+                        data-id="{{ ticket.id }}"
+                        data-title="{{ ticket.title }}"
+                        data-description="{{ ticket.description }}"
+                        data-status="{{ ticket.status }}"
+                        data-created="{{ ticket.createdAt }}">
+                    Edit
+                </button>
+                <a href="/src/tickets.php?action=delete&id={{ ticket.id }}" 
+                   class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                   Delete
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <!-- Show a card prompting user to create a ticket -->
+        <div class="bg-white text-gray-900 max-w-md mx-auto text-center rounded-lg shadow-lg p-6 col-span-full">
+            <h3 class="font-bold text-lg mb-2">Create Your First Ticket</h3>
+            <p class="mb-4">There are no tickets yet. Click below to create one!</p>
+            <button id="openFormBtn" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-2 px-4 rounded shadow-lg">
+                + Create Ticket
+            </button>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal Form -->
+<div id="ticketModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white text-gray-900 rounded-lg shadow-2xl w-full max-w-md p-6">
+        <h2 class="text-xl font-bold mb-4" id="modalTitle">Create Ticket</h2>
+        <form id="ticketForm" action="/src/tickets.php" method="POST" class="space-y-4">
+            <input type="hidden" name="id" id="ticketId">
+            <input type="hidden" name="createdAt" id="ticketCreatedAt">
+            <div>
+                <label class="block font-semibold mb-1">Title</label>
+                <input type="text" name="title" id="ticketTitle" class="w-full p-2 border rounded" required>
+            </div>
+            <div>
+                <label class="block font-semibold mb-1">Description</label>
+                <input type="text" name="description" id="ticketDescription" class="w-full p-2 border rounded" required>
+            </div>
+            <div>
+                <label class="block font-semibold mb-1">Status</label>
+                <select name="status" id="ticketStatus" class="w-full p-2 border rounded">
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Sold Out">Sold Out</option>
+                </select>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" id="closeFormBtn" class="bg-white px-4 py-2 rounded hover:bg-gray-200">Cancel</button>
+                <button type="submit" class="bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 font-bold">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-200 text-black w-full px-8 py-6 mt-8 text-center">
+    <p class="flex items-center gap-2 text-2xl font-extrabold">TIXIFY</p>
+    <p class="text-gray-600 text-sm">© 2024 <span class="font-semibold">TIXIFY</span>. All rights reserved.</p>
+</footer>
+
+<script>
+const modal = document.getElementById('ticketModal');
+const openBtn = document.getElementById('openFormBtn');
+const closeBtn = document.getElementById('closeFormBtn');
+const modalTitle = document.getElementById('modalTitle');
+const form = document.getElementById('ticketForm');
+
+const ticketId = document.getElementById('ticketId');
+const ticketTitle = document.getElementById('ticketTitle');
+const ticketDescription = document.getElementById('ticketDescription');
+const ticketStatus = document.getElementById('ticketStatus');
+const ticketCreatedAt = document.getElementById('ticketCreatedAt');
+
+// Open create ticket form
+if (openBtn) {
+    openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modalTitle.textContent = 'Create Ticket';
+        ticketId.value = Date.now();
+        ticketTitle.value = '';
+        ticketDescription.value = '';
+        ticketStatus.value = 'Open';
+        ticketCreatedAt.value = new Date().toISOString();
+    });
+}
+
+// Close modal
+closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+// Edit ticket buttons
+document.querySelectorAll('.editBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modalTitle.textContent = 'Edit Ticket';
+        ticketId.value = btn.dataset.id;
+        ticketTitle.value = btn.dataset.title;
+        ticketDescription.value = btn.dataset.description;
+        ticketStatus.value = btn.dataset.status;
+        ticketCreatedAt.value = btn.dataset.created;
+    });
+});
+</script>
+
+</body>
+</html>
