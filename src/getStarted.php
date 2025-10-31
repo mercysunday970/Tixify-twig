@@ -32,13 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Simple validation
     if ($fname && $lname && $username && $email && $password) {
         // Check if email already exists
-        foreach ($users as $user) {
-            if ($user['email'] === $email) {
-                $_SESSION['error'] = "Email already exists!";
-                header('Location: getStarted.php');
-                exit;
-            }
+if (!empty($users)) {
+    foreach ($users as $user) {
+        if ($user['email'] === $email) {
+            $_SESSION['error'] = "Email already exists!";
+            header('Location: getStarted.php');
+            exit;
         }
+    }
+}
 
         // Add new user
         $users[] = [
