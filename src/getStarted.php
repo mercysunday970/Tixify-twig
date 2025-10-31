@@ -3,8 +3,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php'; // ✅ Correct path to autoload
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use TwigEnvironment;
+use TwigLoaderFilesystemLoader;
 
 session_start();
 
@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Simple validation
     if ($fname && $lname && $username && $email && $password) {
-        // Check if email already exists
+        // Check if email already exists (case-insensitive)
         foreach ($users as $user) {
-            if ($user['email'] === $email) {
+            if (strcasecmp($user['email'], $email) === 0) {
                 $_SESSION['error'] = "Email already exists!";
                 header('Location: getStarted.php');
                 exit;
@@ -49,7 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ];
 
-        file_put_contents($dataFile, json_encode($users, JSON_PRETTY_PRINT));
+        // Save updated users to file with error check
+        $result = file_put_contents($dataFile, json_encode($users, JSON_PRETTY_PRINT));
+        if ($result === false) {
+            $_SESSION['error'] = "Failed to save user data. Please try again.";
+            header('Location: getStarted.php');
+            exit;
+        }
 
         $_SESSION['success'] = "Signup successful! You are now logged in.";
 
