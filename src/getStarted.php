@@ -77,4 +77,3 @@ echo $twig->render('getStarted.twig', [
     'error' => $error
 ]);
 
-sign up throws an error that user already exists if when it is the first time signing up
